@@ -18,7 +18,7 @@ class prevent_fake_clones_listener(sublime_plugin.EventListener):
 					# check if the file is already opened
 					if (
 						_view.file_name() and # if the view has a file name
-					    _view.id() != view.id() and # if the view is different and not the same that we just opened
+						_view.id() != view.id() and # if the view is different and not the same that we just opened
 						_view.buffer_id() != view.buffer_id() and # if the buffer is not the same (if is not a real clone)
 						path == normalize(_view.file_name()) # if the path of the file matches exactly
 					) :
