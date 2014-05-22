@@ -31,6 +31,13 @@ menuitem("New File Into View") is not appropriated, and opened an issue
 to try to call attention, please visit:
 https://github.com/SublimeText/Issues/issues/34
 
+# Bugs
+
+Instead of preventing the opening of the "fake clone", it would be nice
+to just close the "fake clone" and create a real clone. Problem is that
+currenlty there is no way to move a "real clone" from one window to
+another. Then, we will likely fail at this for now..
+
 # Source-code
 
 https://github.com/SublimeText/PreventFakeClones
