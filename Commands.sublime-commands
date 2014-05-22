@@ -1,0 +1,7 @@
+[
+
+	{"caption": "File: Clone Tab","command": "clone_file"},
+	{"caption": "View: Duplicate","command": "clone_file"},
+	{"caption": "View: Clone","command": "clone_file"}
+
+]
