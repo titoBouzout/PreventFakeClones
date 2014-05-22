@@ -16,8 +16,8 @@ instance of it. Changes in one instance of the file opened will
 overwrite the other instance, making us lose changes if we don't notice
 it.​ Specially happens when we have many windows opened, or when the
 amount of opened files is really huge.​ There are a number of situations
-on which you may be able to open "fake clones" in the same window. This
-package Prevents that.
+on which you may be able to open "fake clones" in the same window.. on
+in other windows... This package Prevents that.
 
 [1] ​I'm sorry this is not about political corruption.
 

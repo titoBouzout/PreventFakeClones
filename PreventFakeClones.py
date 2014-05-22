@@ -24,7 +24,7 @@ class prevent_fake_clones_listener(sublime_plugin.EventListener):
 						_view.window().run_command('focus_neighboring_group')
 						_view.window().focus_view(_view)
 						_view.window().run_command('clone_file')
-						# sublime.error_message('Preventing opening an already opened file(a "fake" clone), focusing already opened file.')
+						sublime.error_message('Preventing opening an already opened file(aka "fake" clone), focusing already opened file....')
 						breaky = True
 						break;
 				if breaky:
