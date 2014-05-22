@@ -6,30 +6,23 @@ def normalize(path):
 	return op.normcase(op.normpath(op.realpath(path)))
 
 class prevent_fake_clones_listener(sublime_plugin.EventListener):
-	def on_load(self, maybe_fake_clone):
+
+	def on_load(self, view):
 
 		# Prevent Fake Clones
-		breaky = False
-		path = maybe_fake_clone.file_name()
-		if path:
-			path = normalize(maybe_fake_clone.file_name())
-			for window in sublime.windows():
-				for _view in window.views():
-					if _view.id() != maybe_fake_clone.id() and not _view.is_loading() and _view.file_name() and _view.buffer_id() != maybe_fake_clone.buffer_id() and path == normalize(_view.file_name()):
-						maybe_fake_clone.window().focus_view(maybe_fake_clone)
-						maybe_fake_clone.window().run_command('close')
+		if view.file_name():
+			path = normalize(view.file_name())
+			window = view.window()
+			for _window in sublime.windows():
+				for _view in _window.views():
+					if _view.id() != view.id() and not _view.is_loading() and _view.file_name() and _view.buffer_id() != view.buffer_id() and path == normalize(_view.file_name()):
+						window.focus_view(view)
+						window.run_command('close')
 
 						# ahhhhhhhhh!!!!
-						_view.window().focus_view(_view)
-						_view.window().run_command('focus_neighboring_group')
-						_view.window().focus_view(_view)
-						_view.window().run_command('clone_file')
+						_window.focus_view(_view)
+						_window.run_command('focus_neighboring_group')
+						_window.focus_view(_view)
+						_window.run_command('clone_file')
 						sublime.error_message('Preventing opening an already opened file(aka "fake" clone), focusing already opened file....')
-						breaky = True
-						break;
-				if breaky:
-					break
-
-
-
-
+						return
