@@ -24,20 +24,17 @@ class prevent_fake_clones_listener(sublime_plugin.EventListener):
 						if not _view.is_dirty():
 							self.focus_view(_view)
 							_window.run_command('close')
+
 							self.focus_view(view)
 						else:
-							# If the other view is "dirty" and in the same window, just focus it.
-							if window == _window:
-								self.focus_view(view)
-								window.run_command('close')
-								self.focus_view(_view)
-							# If the other view is "dirty" and is in another window. Display the popup/statusbar message
-							else:
-								# close it
-								window.run_command('close')
+							self.focus_view(view)
+							window.run_command('close')
 
-								self.focus_view(_view)
-								sublime.status_message('Preventing opening an already opened file (aka "fake clone") Focusing already opened file...  Use: "File -> New File into View" which will open a real clone.')
+							self.focus_view(_view)
+
+							# If the other view is "dirty" and is in another window. Display the popup/statusbar message
+							if window != _window:
+								sublime.status_message('Preventing opening an already opened file (aka "fake clone") Trying to focus already opened file...  Use: "File -> New File into View" which will open a real clone.')
 						return
 
 	def focus_view(self, view):
