@@ -37,6 +37,30 @@ class prevent_fake_clones_listener(sublime_plugin.EventListener):
 								sublime.status_message('Preventing opening an already opened file (aka "fake clone") Trying to focus already opened file...  Use: "File -> New File into View" which will open a real clone.')
 						return
 
+	def on_post_save(self, view):
+		if view.file_name():
+			path = normalize(view.file_name())
+			window = view.window()
+			for _window in sublime.windows():
+				for _view in _window.views():
+					# check if the file is already opened
+					if (
+						_view.file_name() and # if the view has a file name
+						_view.id() != view.id() and # if the view is different and not the same that we just opened
+						_view.buffer_id() != view.buffer_id() and # if the buffer is not the same (if is not a real clone)
+						path == normalize(_view.file_name()) # if the path of the file matches exactly
+					) :
+						# You just have overwriting a view that
+						if not _view.is_dirty(): # just close the other view
+							self.focus_view(_view)
+							_window.run_command('close')
+
+							self.focus_view(view)
+						else: # alert of the probably unwanted action
+							if sublime.ok_cancel_dialog('You just have overwrite a file that is currently opened in another view and has not been saved. Do you want to focus the view that has unsaved changes?'):
+								self.focus_view(_view)
+						return
+
 	def focus_view(self, view):
 		window = view.window()
 		window.focus_view(view)
