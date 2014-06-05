@@ -50,13 +50,17 @@ class prevent_fake_clones_listener(sublime_plugin.EventListener):
 						_view.buffer_id() != view.buffer_id() and # if the buffer is not the same (if is not a real clone)
 						path == normalize(_view.file_name()) # if the path of the file matches exactly
 					) :
-						# You just have overwriting a view that
-						if not _view.is_dirty(): # just close the other view
+						# You just have overwrite a file that is currently opened in another tab/view
+						# is that tab/view dirty? (if it has unsaved changes)
+						if not _view.is_dirty():
+							# then just close it
 							self.focus_view(_view)
 							_window.run_command('close')
 
 							self.focus_view(view)
-						else: # alert of the probably unwanted action
+						else:
+							# the other view/tab is dirty (has unsaved changes)
+							# alert of the probably unwanted action
 							if sublime.ok_cancel_dialog('You just have overwrite a file that is currently opened in another view and has not been saved. Do you want to focus the view that has unsaved changes?'):
 								self.focus_view(_view)
 						return
