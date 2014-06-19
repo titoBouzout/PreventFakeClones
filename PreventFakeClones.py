@@ -6,11 +6,23 @@ def normalize(path):
 	return op.normcase(op.normpath(op.realpath(path)))
 
 class prevent_fake_clones_listener(sublime_plugin.EventListener):
-
 	def on_load(self, view):
+		self.prevent_fake_clone(view)
+
+	def on_activated(self, view):
+		transient = view.settings().get("FakeCloneTransient", False)
+		if transient:
+			view.settings().erase("FakeCloneTransient")
+			self.prevent_fake_clone(view)
+
+	def prevent_fake_clone(self, view):
 		if view.file_name():
 			path = normalize(view.file_name())
 			window = view.window()
+			transient = False
+			if window is None:
+				transient = True
+				view.settings().erase("FakeCloneTransient")
 			for _window in sublime.windows():
 				for _view in _window.views():
 					# check if the file is already opened
@@ -21,10 +33,11 @@ class prevent_fake_clones_listener(sublime_plugin.EventListener):
 						path == normalize(_view.file_name()) # if the path of the file matches exactly
 					) :
 						# If the other view is not "dirty", then close it, and just let the user open the view that is opening.
-						if not _view.is_dirty():
+						if transient:
+							view.settings().set("FakeCloneTransient", transient)
+						elif not _view.is_dirty():
 							self.focus_view(_view)
 							_window.run_command('close')
-
 							self.focus_view(view)
 						else:
 							self.focus_view(view)
