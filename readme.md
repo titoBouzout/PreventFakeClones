@@ -29,7 +29,7 @@ of the file you are writing, and changes to any of the view/tabs will be
 reflected in all the instances. Some of us consider the name of that
 menuitem("New File Into View") is not appropriated, and opened an issue
 to try to call attention, please visit:
-https://github.com/SublimeText/Issues/issues/34
+https://github.com/SublimeTextBugs/Issues/issues/34
 
 # Bugs
 
@@ -40,7 +40,7 @@ another. Then, we will likely fail at this for now..
 
 # Source-code
 
-https://github.com/SublimeText/PreventFakeClones
+https://github.com/titoBouzout/PreventFakeClones
 
 # Forum Thread​​
 
