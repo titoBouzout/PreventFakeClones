@@ -1,6 +1,3 @@
-\*[Sublime Text 3+][] **Package. Install via an updated version of**
-[Package Control 2+][]**. Just** DON'T\*\* install manually.
-
 # Description
 
 **Prevent Corruption** [1] is a simple Sublime Text 3 plug-in which will
@@ -37,6 +34,10 @@ Instead of preventing the opening of the "fake clone", it would be nice
 to just close the "fake clone" and create a real clone. Problem is that
 currenlty there is no way to move a "real clone" from one window to
 another. Then, we will likely fail at this for now..
+
+# Installation
+
+Download or clone the contents of this repository to a folder named exactly as the package name into the Packages/ folder of ST.
 
 # Source-code
 
